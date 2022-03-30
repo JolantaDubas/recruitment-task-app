@@ -10,7 +10,7 @@ interface MockItemProps {
   photoUrl: string;
 }
 
-const UserMockData: { John: MockItemProps; Kristian: MockItemProps } = {
+export const UserMockData: { John: MockItemProps; Kristian: MockItemProps } = {
   John: {
     user: "John Doe",
     photoUrl: "https://picsum.photos/200/200",

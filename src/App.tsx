@@ -27,21 +27,24 @@ function App() {
           <h1>Chat application</h1>
           <p>Switch user</p>
           <ChangeUserSwitch />
-          <ChatBox chat={chat} />
-          <InputContainer>
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-            ></input>
-            <button
-              onClick={() => {
-                const message = { user: user, text: input };
-                setChat((prev) => (prev ? [...prev, message] : [message]));
-              }}
-            >
-              Send
-            </button>
-          </InputContainer>
+          <div>
+            <ChatBox chat={chat} />
+            <InputContainer>
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+              ></input>
+              <button
+                type="submit"
+                onClick={() => {
+                  const message = { user: user, text: input };
+                  setChat((prev) => (prev ? [...prev, message] : [message]));
+                }}
+              >
+                {">"}
+              </button>
+            </InputContainer>
+          </div>
         </ChatContainer>
       </Container>
     </UserContext.Provider>
@@ -69,7 +72,6 @@ const ChatContainer = styled.div`
   }
 `;
 const InputContainer = styled.div`
-  position: absolute;
   box-sizing: border-box;
   bottom: 20px;
   width: 100%;
@@ -77,11 +79,25 @@ const InputContainer = styled.div`
   padding: 14px;
   box-shadow: 0px 0px 18px #0000000f;
   display: grid;
-  grid-template-columns: 5fr 1fr;
+  grid-template-columns: auto min-content;
   gap: 12px;
 
   input {
     padding: 8px;
+    border-radius: 16px;
+    border-width: 1px;
+  }
+  button {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    font-size: 20px;
+    color: white;
+    width: 42px;
+    height: 42px;
+    background: #3491ce;
+    box-shadow: 0px 0px 18px #00000026;
+    border-radius: 100px;
   }
 `;
 
