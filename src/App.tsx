@@ -1,15 +1,50 @@
+import { ChatBox } from "components/chatBox";
+import { ChangeUserSwitch } from "components/changeUserSwitch";
+import { ChatItemProps, UserType } from "models/userModel";
+import { useState } from "react";
+import { createContext } from "react";
 import styled from "styled-components";
 
+interface UserContextProps {
+  user: UserType;
+  setUser: React.Dispatch<React.SetStateAction<UserType>>;
+}
+
+export const UserContext = createContext<UserContextProps>({
+  user: "John",
+  setUser: () => {},
+});
+
 function App() {
+  const [user, setUser] = useState<UserType>("John");
+
+  const [input, setInput] = useState("");
+  const [chat, setChat] = useState<Array<ChatItemProps>>();
   return (
-    <Container>
-      <ChatContainer>
-        <h1>Chat application</h1>
-        <p>Switch user</p>
-        <button>Switch</button>
-        <ChatBoxContainer>ChatBox</ChatBoxContainer>
-      </ChatContainer>
-    </Container>
+    <UserContext.Provider value={{ user, setUser }}>
+      <Container>
+        <ChatContainer>
+          <h1>Chat application</h1>
+          <p>Switch user</p>
+          <ChangeUserSwitch />
+          <ChatBox chat={chat} />
+          <InputContainer>
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            ></input>
+            <button
+              onClick={() => {
+                const message = { user: user, text: input };
+                setChat((prev) => (prev ? [...prev, message] : [message]));
+              }}
+            >
+              Send
+            </button>
+          </InputContainer>
+        </ChatContainer>
+      </Container>
+    </UserContext.Provider>
   );
 }
 
@@ -19,12 +54,13 @@ const Container = styled.div`
   justify-content: center;
 `;
 const ChatContainer = styled.div`
+  position: relative;
   display: grid;
   height: 100%;
   grid-template-rows: repeat(3, min-content) auto;
   gap: 16px;
   padding-top: 42px;
-  padding-bottom: 12px;
+  padding-bottom: 4px;
   box-sizing: border-box;
 
   h1,
@@ -32,13 +68,21 @@ const ChatContainer = styled.div`
     margin: 0;
   }
 `;
-
-const ChatBoxContainer = styled.div`
+const InputContainer = styled.div`
+  position: absolute;
+  box-sizing: border-box;
+  bottom: 20px;
+  width: 100%;
+  background: #ffffff;
+  padding: 14px;
+  box-shadow: 0px 0px 18px #0000000f;
   display: grid;
-  gap: 14px;
-  height: 100%;
-  width: 500px;
-  border: 1px solid #70707033;
-  border-radius: 18px;
+  grid-template-columns: 5fr 1fr;
+  gap: 12px;
+
+  input {
+    padding: 8px;
+  }
 `;
+
 export default App;
