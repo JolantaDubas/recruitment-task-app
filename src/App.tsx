@@ -1,8 +1,7 @@
 import { ChatBox } from "components/chatBox";
 import { ChangeUserSwitch } from "components/changeUserSwitch";
-import { ChatItemProps, UserType } from "models/userModel";
-import { useState } from "react";
-import { createContext } from "react";
+import { UserType } from "models/userModel";
+import { useState, createContext } from "react";
 import styled from "styled-components";
 
 interface UserContextProps {

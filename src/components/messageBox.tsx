@@ -24,12 +24,13 @@ const MessageBox = ({
         width={30}
         border-radius={50}
         src={UserMockData[item.user].photoUrl}
-      ></ProfileImage>
+        alt=""
+      />
       <BoxStyles mainUser={item.user === user}>
         <b>{UserMockData[item.user].user}</b>
         <br />
         {item.text}
-        {item.file && <img src={item.file}></img>}
+        {item.file && <img src={item.file} alt="" />}
       </BoxStyles>
       <ActionsStyles>
         <p>{item.time.toLocaleString()}</p>|

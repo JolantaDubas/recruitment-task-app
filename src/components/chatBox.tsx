@@ -1,7 +1,6 @@
 import { UserContext } from "App";
 import { ChatItemProps } from "models/userModel";
-import { useState } from "react";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 import { MessageBox } from "./messageBox";
 
@@ -24,7 +23,7 @@ const ChatBox = () => {
     console.log("remove id", id);
     setChat((prev) =>
       prev?.filter((item) => {
-        return item.time.toISOString() != id;
+        return item.time.toISOString() !== id;
       })
     );
   }
