@@ -2,7 +2,9 @@ export type UserType = "John" | "Kristian";
 
 export interface ChatItemProps {
   user: UserType;
-  text: string;
+  text?: string;
+  time: Date;
+  file?: string;
 }
 
 interface MockItemProps {

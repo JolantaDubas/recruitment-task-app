@@ -6,22 +6,38 @@ import styled from "styled-components";
 interface Props {
   mainUser: boolean;
 }
-const MessageBox = ({ item }: { item: ChatItemProps }) => {
+const MessageBox = ({
+  item,
+  edit,
+  remove,
+}: {
+  item: ChatItemProps;
+  edit: (id: string) => void;
+  remove: (id: string) => void;
+}) => {
   const { user } = useContext(UserContext);
 
   return (
     <Container mainUser={item.user === user}>
-      <img
+      <ProfileImage
         height={30}
         width={30}
-        border-radius={100}
+        border-radius={50}
         src={UserMockData[item.user].photoUrl}
-      ></img>
+      ></ProfileImage>
       <BoxStyles mainUser={item.user === user}>
-        <b> {UserMockData[item.user].user}</b>
+        <b>{UserMockData[item.user].user}</b>
         <br />
         {item.text}
+        {item.file && <img src={item.file}></img>}
       </BoxStyles>
+      <ActionsStyles>
+        <p>{item.time.toLocaleString()}</p>|
+        {item.text && (
+          <button onClick={() => edit(item.time.toISOString())}>edit</button>
+        )}
+        |<button onClick={() => remove(item.time.toISOString())}>delete</button>
+      </ActionsStyles>
     </Container>
   );
 };
@@ -33,17 +49,37 @@ const BoxStyles = styled.div<Props>`
   height: fit-content;
   padding: 12px;
   border-radius: 16px;
+  img {
+    padding-top: 8px;
+    width: 100%;
+  }
+`;
+
+const ProfileImage = styled.img`
+  border-radius: 50%;
 `;
 
 const Container = styled.div<Props>`
+  display: flex;
   justify-content: ${(props) =>
     props.mainUser ? "end; flex-direction: row-reverse;" : "start"};
-  display: flex;
   gap: 12px;
-  img {
-    border-radius: 50%;
-  }
   padding: 12px;
+  flex-wrap: wrap;
+`;
+const ActionsStyles = styled.div`
+  display: flex;
+  gap: 8px;
+  color: gray;
+  button {
+    background: none;
+    border: none;
+    color: gray;
+    padding: 0;
+    font: inherit;
+    outline: inherit;
+    cursor: pointer;
+  }
 `;
 
 export { MessageBox };
